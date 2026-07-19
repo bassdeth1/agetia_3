@@ -1,0 +1,36 @@
+{
+    "name": "Agetia 3 — Cognitive Backend",
+    "version": "40.0",
+    "description": "Enterprise agent for post-meeting action item extraction, contradiction resolution, and structured artifact generation (project plans, PRDs, minutes, security audits, risk assessments, sprint reviews, executive summaries). Uses hybrid LLM + regex pipeline with LM Studio local inference.",
+    "author": "Woods / monrroy_open_bot",
+    "entrypoint": "agent_entrypoint.py",
+    "handler": "handle_sitrep_request_v40",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "transcript": {"type": "string", "description": "Meeting transcript text"},
+            "task": {"type": "string", "description": "Task description for the agent"},
+            "expected_format": {
+                "type": "string",
+                "enum": ["minutes", "project_plan", "prd", "security_audit", "executive_summary", "risk_assessment", "sprint_review"],
+                "description": "Desired output artifact format"
+            }
+        },
+        "required": ["transcript"]
+    },
+    "output_schema": {
+        "type": "object",
+        "properties": {
+            "status": {"type": "string", "enum": ["SUCCESS", "REJECTED"]},
+            "artifact": {"type": "string", "description": "Generated artifact in markdown"},
+            "source": {"type": "string", "enum": ["llm", "deterministic_fallback"]},
+            "metrics": {"type": "object"}
+        }
+    },
+    "security": {
+        "injection_protection": true,
+        "data_leak_prevention": true,
+        "hallucination_guardrails": true,
+        "confidence_scoring": true
+    }
+}

@@ -1,0 +1,2 @@
+# Agetia 3 — Backend Cognitivo para SitRep Marketplace
+requests>=2.28.0
