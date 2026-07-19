@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+*.zip
+.env
+*.log
+data/*.txt
